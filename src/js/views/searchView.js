@@ -16,13 +16,13 @@ export const clearResults = () => {
 };
 
 export const selected = id => {
-    // adds the class in question´
-    const resultsArr = Array.from[document.querySelectorAll('.results__link;')];
+    // adds the class below
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
     resultsArr.forEach(el => {
-        el.classList.remove('.results__link--active');
+        el.classList.remove('results__link--active');
     });
 
-    document.querySelector(`a[href="#${id}"]`).classList.add('result__link--active');
+    document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
 }
 
 const limitRecipeTitle = (title, limit = 17) => {

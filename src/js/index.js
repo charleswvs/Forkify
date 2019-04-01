@@ -10,6 +10,8 @@ import {
 import {
     basename
 } from 'path';
+import { isRegExp } from 'util';
+import List from './models/List';
 
 /** Global state of the app
  * - Search object
@@ -49,11 +51,13 @@ const controlSearch = async () => {
     };
 };
 
+//listen for clicks at submit
 elements.searchForm.addEventListener('submit', e => {
     e.preventDefault(); // Prevents the page from reloading
     controlSearch();
 });
 
+//listen for clicks at pages
 elements.searchResPages.addEventListener('click', e => {
     //console.log(e.target);   This is how you find out where the click happened
     const btn = e.target.closest('.btn-inline');
@@ -78,7 +82,9 @@ const controlRecipe = async () => {
         renderLoader(elements.recipe);
 
         //Highlight selected search item
-        if(state.search) searchView.selected(id);
+        if(state.search) {
+            searchView.selected(id)
+        };
 
         // Create new recipe object
         state.recipe = new Recipe(id);
@@ -107,3 +113,22 @@ const controlRecipe = async () => {
 
 // This event listener shows the information either if the page is loaded or the hash changed
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+// handling recipe btn clicks
+elements.recipe.addEventListener('click', e =>{
+    if(e.target.matches('.btn-decrease, .btn-decrease *')){
+        // Decrease button is clicked
+        if  (state.recipe.servings > 1){
+            state.recipe.updateServings('dec');
+            recipeView.updateServingsIngredients(state.recipe);
+        }
+    }
+    if(e.target.matches('.btn-increase, .btn-increase *')){
+        // Increase button is clicked
+        state.recipe.updateServings('inc');
+        recipeView.updateServingsIngredients(state.recipe);
+    }
+    
+});
+
+window.l = new List();
