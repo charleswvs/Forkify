@@ -25,7 +25,6 @@ import { isRegExp } from 'util';
  * - Like recipes
  */
 const state = {};
-window.state = state;
 
 /**
  * SEARCH CONTROLLER
@@ -177,7 +176,7 @@ const controlLike = () =>{
         likesView.toggleLikesBtn(true);
         //add like to UI list
         likesView.renderLike(newLike);
-        console.log(state.likes);
+     
 
     // user HAS liked current recipe
     }else{
@@ -187,8 +186,6 @@ const controlLike = () =>{
         // Toggle the like button
         likesView.toggleLikesBtn(false);
         // Remove like from UI list
-        likesView.deleteLike(currentID); 
-        console.log(state.likes);
     };
 
     likesView.toggleLikeMenu(state.likes.likes.length);
@@ -232,4 +229,3 @@ elements.recipe.addEventListener('click', e =>{
     
 });
 
-window.l = new List();

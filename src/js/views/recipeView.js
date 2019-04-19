@@ -26,19 +26,20 @@ const formatCount = count => {
         // count = .5 --> 1/2;
         
         // converts the number, which is a string, split it, create a 2 variables with its parts (integer and decimal) using destructure
-        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
+        const newCount = Math.round(count * 10000) / 10000;
+        const [int, dec] = newCount.toString().split('.').map(el => parseInt(el, 10));
 
         // if there is no decimal part you only need to return the number u got.
         if (!dec) {
-            return count;
+            return newCount;
         }
 
         if (int === 0) {
             //Using the fraction library
-            const fr = new Fraction(count);
+            const fr = new Fraction(newCount);
             return `${fr.numerator}/${fr.denominator}`;
         } else {
-            const fr = new Fraction(count - int);
+            const fr = new Fraction(newCount - int);
             return `${int} ${fr.numerator}/${fr.denominator}`;
         }
     }
